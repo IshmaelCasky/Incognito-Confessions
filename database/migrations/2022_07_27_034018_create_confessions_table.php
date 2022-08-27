@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer("reacts")->default(0);
             $table->json("reacts_users")->nullable();
             // id of confesser
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('user_id');
             $table->timestamps();
         });
     }

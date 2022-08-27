@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer("confessions_count");
             // id of user
-            $table->foreignId("user_id")->constrained()->cascadeOnDelete();
+            $table->string("user_id");
             $table->timestamp("updated_at");
             $table->timestamp("created_at");
         });
