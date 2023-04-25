@@ -1,0 +1,157 @@
+
+choices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'x']
+
+sID = [1,2,3]
+sName = ["Marimar","Bella", "Bea"]
+sPF = [500, 300, 250]
+sCustomerCount = [0, 0, 0]
+
+stylists = [[1,"Marimar",500],[2,"Bella",300],[3,"Bea",250]]
+
+#services
+sCode = ['A','B','C']
+sDesc = ['Hair Rebond','Manicure&Pedicure','Hair Spa']
+sPrice = [999,299,499]
+sSummary = [0, 0, 0]
+
+services =[['A','Hair Rebond',999],['B','Manicure&Pedicure',299],
+['C','Hair Spa',499]]
+
+customers = []
+
+def menu():
+    
+    print("MENU")
+    print("(A) Display Services")
+    print("(B) Display Stylist")
+    print("(C) Avail Service")
+    print("(D) Display list of Customers")
+    print("(E) Delete a customer based on customer number in the list")
+    print("(F) Clear customers")
+    print("(G) Display Summary ( count per service ) of availed services")
+    print("(H) Display Total Professional Fee per stylist")
+    print("(I) Display Total Income")
+    print("(X) Exit")
+    
+    userInput = str(input("Enter your choice: ")).lower()
+    
+    if(userInput in choices):
+        selectChoice(userInput)
+    else:
+        print("wrong choice")
+        menu()
+
+def selectChoice( choice ):
+    
+    if choice == "a":
+        displayServices()
+    elif choice == "b":
+        displayStylists()
+    elif choice == "c":
+        availService()
+    elif choice == "d":
+        displayCustomers()
+    elif choice == "e":
+        clearCustomerByNum()
+    elif choice == "f":
+        clearCustomers()
+    elif choice == "g":
+        displaySummary()
+    elif choice == "h":
+        incomePerStylist()
+    elif choice == "i":
+        totalIncome()
+    elif choice == "x":
+        print("Thank you!")
+        
+def displayServices():
+    for service in services:
+        serv = ""
+        for data in service:
+            serv += f"{data} "
+        print(serv)
+        
+    menu()
+
+def displayStylists():
+    for stylist in stylists:
+        temp = ""
+        for data in stylist:
+            temp += f"{data} "
+        print(temp)
+    
+    menu()
+        
+def availService():
+    customerName = input("Enter customer name: ")
+    
+    
+    stylistCode = int(input("Enter stylist code: "))
+    
+    while(int(stylistCode) not in sID):
+        stylistCode = int(input("Enter stylist code: "))
+    
+    
+    servicecode = str(input("Enter service code: ")).upper()
+    
+    while(servicecode not in sCode):
+        serviceCode = int(input("Enter service code: "))
+        
+    customerNum = len(customers)
+    stylistName = sName[int(sID.index(stylistCode))]
+    price = sPF[int(sID.index(stylistCode))] + sPrice[sCode.index(servicecode)]
+    service = sDesc[sCode.index(servicecode)]
+    sSummary[sCode.index(servicecode)] += 1
+    sCustomerCount[int(sID.index(stylistCode))] += 1
+    customer = [customerNum, customerName, stylistName, service, price]
+    customers.append(customer)
+    
+    print(f'Hi {customerName} You choose {stylistName}. To do your {service}.')
+    
+    menu()
+    
+def displayCustomers():
+    
+    for customer in customers:
+        temp = ""
+        for i in range(len(customer)-1):
+            temp += f"{customer[i+1]} "
+        print(temp)
+        
+    menu()
+    
+def clearCustomerByNum():
+    customerNum = int(input("Enter Customer Number: "))
+    
+    index = 0
+    for customer in customers:
+        if customer[0] == customerNum:
+            customers.pop(index)
+    menu()
+    
+
+def clearCustomers():
+    customers.clear()
+    print("Successfully cleared customers")
+    menu()
+    
+def displaySummary():
+    for i in range(len(sDesc)):
+        print(f"{sDesc[i]} - {sSummary[i]}")
+        
+    menu()
+    
+def incomePerStylist():
+    for i in range(len(sCustomerCount)):
+        print(f"{sName[i]} - {sCustomerCount[i] * sPF[i]}")
+        
+    menu()
+    
+def totalIncome():
+    totalIncome = 0
+    for customer in customers:
+        totalIncome += customer[4]
+    print(f"Total Income : {totalIncome}")
+    menu()
+    
+menu()
